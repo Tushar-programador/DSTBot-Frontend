@@ -49,19 +49,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const passwordInput = document.getElementById("passwordInput");
       const password = passwordInput.value.trim(); // Get the password value
 
-      console.log("Caption:", caption);
-      console.log("Image:", image);
-      console.log("Password:", password);
-
       if (caption === "<p><br></p>" && !image) {
-        console.log("Validation failed: No caption or image provided.");
         alert("Please provide either a caption or an image.");
         spinner.style.display = "none";
         return; // Stop further execution
       }
 
       if (!password) {
-        console.log("Validation failed: Password is required.");
         alert("Password must be provided.");
         spinner.style.display = "none";
         return; // Stop further execution
@@ -88,19 +82,17 @@ document.addEventListener("DOMContentLoaded", () => {
         body: formData,
       });
 
+      const data = await response.json();
       if (!response.ok) {
-        throw new Error("Failed to send message.");
+        throw new Error(data.message);
       }
 
-      const data = await response.json();
-      console.log("Success:", data);
-      alert("Message sent");
+      alert(data.message);
 
       form.reset();
       quill.root.innerHTML = "";
       rowsContainer.innerHTML = "";
     } catch (error) {
-      console.error("Error:", error);
       alert(`An error occurred: ${error.message}`);
     } finally {
       spinner.style.display = "none"; // Hide spinner
