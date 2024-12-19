@@ -83,7 +83,9 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       const data = await response.json();
+
       if (!response.ok) {
+        console.log(1);
         throw new Error(data.message);
       }
 
